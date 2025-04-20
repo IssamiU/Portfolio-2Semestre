@@ -1,0 +1,191 @@
+/* Geral */
+body {
+    font-family: 'Josefin Sans', sans-serif;
+    line-height: 1.6;
+    --s: 82px;
+    --c1: #b1b1b1;
+    --c2: #bdbdbd;
+    --c3: #acacac;
+    --_g: var(--c3) 0 120deg, #0000 0;
+    background: conic-gradient(from -60deg at 50% calc(100% / 3), var(--_g)), conic-gradient(from 120deg at 50% calc(200% / 3), var(--_g)), conic-gradient(from 60deg at calc(200% / 3), var(--c3) 60deg, var(--c2) 0 120deg, #0000 0), conic-gradient(from 180deg at calc(100% / 3), var(--c1) 60deg, var(--_g)), linear-gradient(90deg, var(--c1) calc(100% / 6), var(--c2) 0 50%, var(--c1) 0 calc(500% / 6), var(--c2) 0);
+    background-size: calc(1.732* var(--s)) var(--s);
+    overflow-x: hidden;
+}
+
+/* Imagem de Perfil */
+#home img {
+    border-radius: 50%;
+    width: 300px;
+    height: 300px;
+    object-fit: cover;
+    border: 3px solid #E9C46A;
+    box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
+}
+
+#home img:hover {
+    transform: scale(1.1);
+}
+
+
+
+/* Sobre Mim Section */
+#sobre h2{
+    font-size: 120px;
+    color: #0000001a;
+    padding: 50px;
+   
+}
+
+#sobre img {
+    width: 80px;  /* Reduzido */
+    height: 80px; /* Reduzido */
+    padding: 10px;
+    border-radius: 20px;
+    border: 3px solid #E9C46A;
+    box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+#sobre img:hover {
+    transform: scale(1.1);
+    filter: brightness(1.2);
+}
+
+
+.habilidades {
+    position: relative; /* Permite ajustar a posição */
+    top: 60px; /* Move o retângulo cinza para baixo */
+    margin: 0 auto; /* Centraliza o retângulo */
+    box-shadow: 0 0 10px #00000080;
+    border-radius: 10px;
+    width: 90%; /* Ajuste o tamanho para ser mais responsivo */
+    
+    column-gap: 20px;
+    row-gap: 0px;
+    display: flex; /* Garante alinhamento interno */
+    justify-content: center; /* Centraliza as imagens horizontalmente */
+    align-items: start;
+    background-color: #e0e0e0; /* Garante a cor cinza */
+    overflow: visible;
+    padding-bottom: 20px;
+    
+    
+}
+
+.habilidades div {
+    position: relative;
+    
+}
+
+.tip{
+    width: 80px;
+    height: 28px;
+    padding-top: 7px;
+    padding-bottom: 5px;
+    padding-left: 5px;
+    padding-right: 5px;
+    border-radius: 40px;
+    position: absolute;
+    opacity: 0;
+    visibility: hidden;
+    text-transform: uppercase;
+    font-weight: 800;
+    font-size: 10px;
+    top: -10px;
+
+    transform: translateY(20%);
+    transition: all .3s ease;
+    z-index: 10;
+}
+.habilidades div:hover .tip {
+    opacity: 1; /* Torna visível */
+    visibility: visible; /* Remove o "hidden" */
+    transform: translateY(0); /* Anima para a posição original */
+}
+
+#projetos h2{
+    font-size: 120px;
+    color: #0000001a;
+    padding: 50px;
+}
+
+#certificados h2{
+    font-size: 120px;
+    color: #0000001a;
+    padding: 50px;
+}
+
+
+
+
+
+
+/* Contato - Ícones */
+#contato img {
+    width: 80px;  /* Reduzido */
+    height: 80px; /* Reduzido */
+    padding: 0px;
+    border-radius: 50%;
+    border: 3px solid #E9C46A;
+    box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+#contato img:hover {
+    transform: scale(1.1);
+    filter: brightness(1.2);
+}
+
+/* Responsividade adicional para seções grandes */
+@media (max-width: 1024px) {
+    #sobre h2, #projetos h2, #certificados h2 {
+        font-size: 3rem; /* Reduzindo o tamanho do título em telas menores */
+    }
+}
+
+@media (max-width: 768px) {
+    #home img {
+        width: 150px;
+        height: 150px;
+    }
+
+    .habilidades {
+        flex-wrap: wrap; /* Permitir que as habilidades fiquem em várias linhas */
+        height: 400px; /* Ajusta a altura */
+        padding: 10px;
+        
+        
+    }
+
+    .habilidades div {
+        margin: 5px; /* Espaçamento entre as habilidades */
+        height: 400px;
+    }
+
+    #sobre img {
+        width: 60px;
+        height: 60px;
+    }
+
+    #contato img {
+        width: 60px;
+        height: 60px;
+    }
+}
+
+/* Ajustes para dispositivos muito pequenos */
+@media (max-width: 480px) {
+    .container {
+        padding: 0 1rem; /* Reduzindo o padding para caber em telas menores */
+    }
+
+    .habilidades {
+        gap: 10px; /* Reduzindo o espaçamento entre habilidades */
+
+    }
+
+    .swiper {
+        padding: 10px; /* Ajustar o padding para caber em dispositivos pequenos */
+    }
+}
