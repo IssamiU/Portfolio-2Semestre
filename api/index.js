@@ -1,5 +1,6 @@
 const express = require('express');
 const mysql = require('mysql2');
+const serverless = require('serverless-http');
 require('dotenv').config();
 
 const app = express();
@@ -13,8 +14,8 @@ const db = mysql.createConnection({
     host: process.env.DB_HOST,
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME, 
-    port : process.env.DB_PORT
+    database: process.env.DB_NAME,
+    port: process.env.DB_PORT
 });
 
 db.connect(err => {
@@ -87,8 +88,6 @@ app.get('/', (req, res) => {
 });
 
 // ===== CRUD PROJETOS =====
-
-// CREATE projeto
 app.post('/projetos', (req, res) => {
     const { titulo, descricao, tecnologias, atuacao, github_url, imagem_url, video_url, tipo_midia, semestre, ordem_exibicao } = req.body;
     const sql = 'INSERT INTO projetos (titulo, descricao, tecnologias, atuacao, github_url, imagem_url, video_url, tipo_midia, semestre, ordem_exibicao) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
@@ -98,7 +97,6 @@ app.post('/projetos', (req, res) => {
     });
 });
 
-// READ todos os projetos
 app.get('/projetos', (req, res) => {
     db.query('SELECT * FROM projetos', (err, results) => {
         if (err) return res.status(500).send(err);
@@ -106,7 +104,6 @@ app.get('/projetos', (req, res) => {
     });
 });
 
-// READ projeto por ID
 app.get('/projetos/:id', (req, res) => {
     db.query('SELECT * FROM projetos WHERE id = ?', [req.params.id], (err, results) => {
         if (err) return res.status(500).send(err);
@@ -114,7 +111,6 @@ app.get('/projetos/:id', (req, res) => {
     });
 });
 
-// UPDATE projeto
 app.put('/projetos/:id', (req, res) => {
     const { titulo, descricao, tecnologias, atuacao, github_url, imagem_url, video_url, tipo_midia, semestre, ordem_exibicao } = req.body;
     const sql = 'UPDATE projetos SET titulo = ?, descricao = ?, tecnologias = ?, atuacao = ?, github_url = ?, imagem_url = ?, video_url = ?, tipo_midia = ?, semestre = ?, ordem_exibicao = ? WHERE id = ?';
@@ -124,7 +120,6 @@ app.put('/projetos/:id', (req, res) => {
     });
 });
 
-// DELETE projeto
 app.delete('/projetos/:id', (req, res) => {
     db.query('DELETE FROM projetos WHERE id = ?', [req.params.id], (err) => {
         if (err) return res.status(500).send(err);
@@ -133,8 +128,6 @@ app.delete('/projetos/:id', (req, res) => {
 });
 
 // ===== CRUD PERFIL =====
-
-// CREATE perfil
 app.post('/perfil', (req, res) => {
     const { nome, ano_nascimento, curso_atual, instituicao, previsao_conclusao, formacao_anterior, instituicao_anterior, ano_conclusao_anterior, biografia, objetivo_profissional, caracteristicas_pessoais, foto_url, curriculo_url } = req.body;
     const sql = 'INSERT INTO perfil (nome, ano_nascimento, curso_atual, instituicao, previsao_conclusao, formacao_anterior, instituicao_anterior, ano_conclusao_anterior, biografia, objetivo_profissional, caracteristicas_pessoais, foto_url, curriculo_url) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
@@ -144,7 +137,6 @@ app.post('/perfil', (req, res) => {
     });
 });
 
-// READ todos os perfis
 app.get('/perfil', (req, res) => {
     db.query('SELECT * FROM perfil', (err, results) => {
         if (err) return res.status(500).send(err);
@@ -152,7 +144,6 @@ app.get('/perfil', (req, res) => {
     });
 });
 
-// READ perfil por ID
 app.get('/perfil/:id', (req, res) => {
     db.query('SELECT * FROM perfil WHERE id = ?', [req.params.id], (err, results) => {
         if (err) return res.status(500).send(err);
@@ -160,7 +151,6 @@ app.get('/perfil/:id', (req, res) => {
     });
 });
 
-// UPDATE perfil
 app.put('/perfil/:id', (req, res) => {
     const { nome, ano_nascimento, curso_atual, instituicao, previsao_conclusao, formacao_anterior, instituicao_anterior, ano_conclusao_anterior, biografia, objetivo_profissional, caracteristicas_pessoais, foto_url, curriculo_url } = req.body;
     const sql = 'UPDATE perfil SET nome = ?, ano_nascimento = ?, curso_atual = ?, instituicao = ?, previsao_conclusao = ?, formacao_anterior = ?, instituicao_anterior = ?, ano_conclusao_anterior = ?, biografia = ?, objetivo_profissional = ?, caracteristicas_pessoais = ?, foto_url = ?, curriculo_url = ? WHERE id = ?';
@@ -170,7 +160,6 @@ app.put('/perfil/:id', (req, res) => {
     });
 });
 
-// DELETE perfil
 app.delete('/perfil/:id', (req, res) => {
     db.query('DELETE FROM perfil WHERE id = ?', [req.params.id], (err) => {
         if (err) return res.status(500).send(err);
@@ -179,8 +168,6 @@ app.delete('/perfil/:id', (req, res) => {
 });
 
 // ===== CRUD HABILIDADES =====
-
-// CREATE habilidade
 app.post('/habilidades', (req, res) => {
     const { nome, icone_url, cor_background, ordem_exibicao } = req.body;
     const sql = 'INSERT INTO habilidades (nome, icone_url, cor_background, ordem_exibicao) VALUES (?, ?, ?, ?)';
@@ -190,7 +177,6 @@ app.post('/habilidades', (req, res) => {
     });
 });
 
-// READ todas as habilidades
 app.get('/habilidades', (req, res) => {
     db.query('SELECT * FROM habilidades', (err, results) => {
         if (err) return res.status(500).send(err);
@@ -198,7 +184,6 @@ app.get('/habilidades', (req, res) => {
     });
 });
 
-// READ habilidade por ID
 app.get('/habilidades/:id', (req, res) => {
     db.query('SELECT * FROM habilidades WHERE id = ?', [req.params.id], (err, results) => {
         if (err) return res.status(500).send(err);
@@ -206,7 +191,6 @@ app.get('/habilidades/:id', (req, res) => {
     });
 });
 
-// UPDATE habilidade
 app.put('/habilidades/:id', (req, res) => {
     const { nome, icone_url, cor_background, ordem_exibicao } = req.body;
     const sql = 'UPDATE habilidades SET nome = ?, icone_url = ?, cor_background = ?, ordem_exibicao = ? WHERE id = ?';
@@ -216,7 +200,6 @@ app.put('/habilidades/:id', (req, res) => {
     });
 });
 
-// DELETE habilidade
 app.delete('/habilidades/:id', (req, res) => {
     db.query('DELETE FROM habilidades WHERE id = ?', [req.params.id], (err) => {
         if (err) return res.status(500).send(err);
@@ -225,8 +208,6 @@ app.delete('/habilidades/:id', (req, res) => {
 });
 
 // ===== CRUD CERTIFICADOS =====
-
-// CREATE certificado
 app.post('/certificados', (req, res) => {
     const { titulo, descricao, imagem_url, documento_url, data_obtencao, ordem_exibicao } = req.body;
     const sql = 'INSERT INTO certificados (titulo, descricao, imagem_url, documento_url, data_obtencao, ordem_exibicao) VALUES (?, ?, ?, ?, ?, ?)';
@@ -236,7 +217,6 @@ app.post('/certificados', (req, res) => {
     });
 });
 
-// READ todos os certificados
 app.get('/certificados', (req, res) => {
     db.query('SELECT * FROM certificados', (err, results) => {
         if (err) return res.status(500).send(err);
@@ -244,7 +224,6 @@ app.get('/certificados', (req, res) => {
     });
 });
 
-// READ certificado por ID
 app.get('/certificados/:id', (req, res) => {
     db.query('SELECT * FROM certificados WHERE id = ?', [req.params.id], (err, results) => {
         if (err) return res.status(500).send(err);
@@ -252,7 +231,6 @@ app.get('/certificados/:id', (req, res) => {
     });
 });
 
-// UPDATE certificado
 app.put('/certificados/:id', (req, res) => {
     const { titulo, descricao, imagem_url, documento_url, data_obtencao, ordem_exibicao } = req.body;
     const sql = 'UPDATE certificados SET titulo = ?, descricao = ?, imagem_url = ?, documento_url = ?, data_obtencao = ?, ordem_exibicao = ? WHERE id = ?';
@@ -262,7 +240,6 @@ app.put('/certificados/:id', (req, res) => {
     });
 });
 
-// DELETE certificado
 app.delete('/certificados/:id', (req, res) => {
     db.query('DELETE FROM certificados WHERE id = ?', [req.params.id], (err) => {
         if (err) return res.status(500).send(err);
@@ -271,8 +248,6 @@ app.delete('/certificados/:id', (req, res) => {
 });
 
 // ===== CRUD CONTATOS =====
-
-// CREATE contato
 app.post('/contatos', (req, res) => {
     const { tipo, valor, icone_url, ordem_exibicao } = req.body;
     const sql = 'INSERT INTO contatos (tipo, valor, icone_url, ordem_exibicao) VALUES (?, ?, ?, ?)';
@@ -282,7 +257,6 @@ app.post('/contatos', (req, res) => {
     });
 });
 
-// READ todos os contatos
 app.get('/contatos', (req, res) => {
     db.query('SELECT * FROM contatos', (err, results) => {
         if (err) return res.status(500).send(err);
@@ -290,7 +264,6 @@ app.get('/contatos', (req, res) => {
     });
 });
 
-// READ contato por ID
 app.get('/contatos/:id', (req, res) => {
     db.query('SELECT * FROM contatos WHERE id = ?', [req.params.id], (err, results) => {
         if (err) return res.status(500).send(err);
@@ -298,7 +271,6 @@ app.get('/contatos/:id', (req, res) => {
     });
 });
 
-// UPDATE contato
 app.put('/contatos/:id', (req, res) => {
     const { tipo, valor, icone_url, ordem_exibicao } = req.body;
     const sql = 'UPDATE contatos SET tipo = ?, valor = ?, icone_url = ?, ordem_exibicao = ? WHERE id = ?';
@@ -308,7 +280,6 @@ app.put('/contatos/:id', (req, res) => {
     });
 });
 
-// DELETE contato
 app.delete('/contatos/:id', (req, res) => {
     db.query('DELETE FROM contatos WHERE id = ?', [req.params.id], (err) => {
         if (err) return res.status(500).send(err);
@@ -316,6 +287,4 @@ app.delete('/contatos/:id', (req, res) => {
     });
 });
 
-app.listen(3000, () => {
-    console.log('Servidor rodando em: http://localhost:3000');
-});
+module.exports = serverless(app);
