@@ -20,6 +20,23 @@ function getDbConnection() {
         port: process.env.DB_PORT
     });
 }
+app.get('/ping', (req, res) => {
+  res.send('pong');
+});
+
+app.get('/dbtest', (req, res) => {
+  const db = getDbConnection();
+  db.connect(err => {
+    if (err) {
+      return res.status(500).send('Erro ao conectar ao MySQL: ' + err.message);
+    }
+    db.query('SELECT 1', (err, results) => {
+      db.end();
+      if (err) return res.status(500).send('Erro na query: ' + err.message);
+      res.send('Conexão e query MySQL OK!');
+    });
+  });
+});
 
 // Rota principal
 app.get('/', (req, res) => {
